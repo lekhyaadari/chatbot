@@ -7,7 +7,7 @@ const OpenAI = require('openai');
 const openai = new OpenAI({ apiKey:'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' }); //replace 'API Key' with your API key
 
 
-//Define an async function named main
+//Define an async function named main 
 async function main() {
   const completion = await openai.chat.completions.create({
     messages: 
