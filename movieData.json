@@ -1,0 +1,9 @@
+{
+    "movies": [
+        {
+            "title": "Elf",
+            "holiday": "Christmas",
+            "description": "A Christmas-themed movie..."
+        }
+    ]
+}
