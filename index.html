@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        #modelviewer {
+            height: 800px;
+            width: 700px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            margin-top: 100px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <model-viewer id="modelviewer" alt="Ready Player Me Avatar"
+        src="https://models.readyplayer.me/6541a0ab8b8b05014d60b8b5.glb" shadow-intensity="1" camera-controls
+        touch-action="pan-y" animation-name="ArmatureAction" autoplay animation-crossfade-duration="0.5">
+    </model-viewer>
+</body>
+
+</html>
