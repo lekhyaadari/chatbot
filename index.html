@@ -6,8 +6,11 @@
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Holiday Movie Bot</title>
 
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+    
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <style>
         #modelviewer {
@@ -23,10 +26,26 @@
 </head>
 
 <body>
-    <model-viewer id="modelviewer" alt="Ready Player Me Avatar"
-        src="https://models.readyplayer.me/6541a0ab8b8b05014d60b8b5.glb" shadow-intensity="1" camera-controls
-        touch-action="pan-y" animation-name="ArmatureAction" autoplay animation-crossfade-duration="0.5">
-    </model-viewer>
+    <div class="container">
+        <div class="avatar-column">
+            <model-viewer id="modelviewer" alt="Ready Player Me Avatar"
+                src="https://models.readyplayer.me/6541a0ab8b8b05014d60b8b5.glb" shadow-intensity="1" camera-controls
+                touch-action="pan-y" animation-name="ArmatureAction" autoplay animation-crossfade-duration="0.5">
+            </model-viewer>
+        </div>
+        <div class="chat-column">
+            <div class="chat-container">
+                <div class="chat-header" id="current-date">
+                    <!-- The current date will be displayed here -->
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Messages will be displayed here -->
+                </div>
+                <input type="text" id="user-input" class="user-input" placeholder="Ask me movie suggestions">
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 
 </html>
