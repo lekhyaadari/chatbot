@@ -1,19 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenAI Chat</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Holiday Movie Bot</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        #modelviewer {
+            height: 800px;
+            width: 700px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            margin-top: 100px;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
-    <form id="chatForm">
-        <label for="userInput">Your message:</label>
-        <input type="text" id="userInput" name="userInput">
-        <button type="submit">Submit</button>
-    </form>
+    <div class="container">
+        <div class="avatar-column">
+            <model-viewer id="modelviewer" alt="Ready Player Me Avatar" src="https://models.readyplayer.me/6541a0ab8b8b05014d60b8b5.glb" shadow-intensity="1" camera-controls touch-action="pan-y" animation-name="ArmatureAction" autoplay animation-crossfade-duration="0.5"></model-viewer>
+        </div>
+        <div class="chat-column">
+            <div class="chat-container">
+                <div class="chat-header" id="current-date">
+                    <!-- The current date will be displayed here -->
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Messages will be displayed here -->
+                </div>
+                <input type="text" id="user-input" class="user-input" placeholder="Ask me movie suggestions">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('send-button').addEventListener('click', function() {
+    const userInputField = document.getElementById('user-input');
+    const userInput = userInputField.value;
+    const chatMessagesContainer = document.getElementById('chat-messages');
+    
+    if (userInput.trim()) {
+        const userMessageElement = document.createElement('div');
+        userMessageElement.textContent = 'You: ' + userInput;
+        chatMessagesContainer.appendChild(userMessageElement);
+        
+        userInputField.value = '';
 
-    <div id="chatOutput"></div>
-
-    <script src="script.js"></script>
+        fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userInput: userInput })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const openaiMessageElement = document.createElement('div');
+            openaiMessageElement.textContent = 'Bot: ' + data.message;
+            chatMessagesContainer.appendChild(openaiMessageElement);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            const errorMessageElement = document.createElement('div');
+            errorMessageElement.textContent = 'Error: Could not get a response.';
+            chatMessagesContainer.appendChild(errorMessageElement);
+        });
+    }
+});
+        
+        // Automatically focus the input field when the page loads
+        window.onload = function() {
+            document.getElementById('user-input').focus();
+        };
+    </script>
 </body>
 </html>
