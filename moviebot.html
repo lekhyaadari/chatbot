@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot Interaction</title>
+  </head>
+  <body>
+    <h1>Chatbot Interaction</h1>
+    <p id = "chat-message"></p>
+    <label for = "userInput">Enter your message...</label>
+    <input type="text" id="userInput" placeholder="Enter your message..." />
+    <button id = "btn" type="submit" accesskey="return">Send</button>
+    
+    <script>
+        const message = "Hello I am Holly, I can recommend you a holiday movie! (enter \'exit chat\' at anytime to stop chat)";
+        document.getElementById("chat-message").innerText = message;
+
+        document.getElementById("btn").onclick = function() {
+            const userInput = document.getElementById("userInput").value;
+            document.getElementById("user-message").innerHTML = userInput;
+        }
+
+        const OpenAI = require('openai');
+        const openai = new OpenAI({ apiKey:'sk-rW83yvxDYg5XLGTH5oXNT3BlbkFJ0SQGKwpWnShVfuvG6vjxja' }); //replace 'API Key' with your API key
+
+        const chatHistory = [];
+        chatHistory.push({role: "system", content: message});
+
+        async function main() {
+            const userInput = document.getElementById("userInput").value;
+            //document.getElementById("user-message").innerText = userInput;
+            chatHistory.push({role: "user", content: userInput});
+
+            const completion = await openai.chat.completions.create({
+                messages: chatHistory,
+                model: "gpt-3.5-turbo",
+            });
+            const response = completion.choices[0].message.content;
+            document.getElementById("system-response").innerHTML = response;
+
+            chatHistory.push({role: "system", content: response});
+
+            //message = chatHistory[chatHistory.length - 1].content;
+        }
+    </script>
+    <p id = "user-message"></p>
+    <p id = "system-response"></p>
+    <p id = "exit"></p>
+  </body>
+</html>
